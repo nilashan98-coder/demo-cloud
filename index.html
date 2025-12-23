@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title> Bangles by Nila | Online Store</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 0; background: #fff8f3; color: #333; }
+    header { background: #8e44ad; color: white; padding: 20px; text-align: center; }
+    nav a { color: white; margin: 0 10px; text-decoration: none; font-weight: bold; }
+    .hero { padding: 40px; text-align: center; background: #f3e5f5; }
+    .offer-box { margin-top:15px;padding:15px;background:#ffefd5;border-radius:12px;display:inline-block; }
+    .countdown { font-weight:bold; color:#c0392b; margin-top:8px; }
+    .products { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; padding: 30px; }
+    .card { position:relative; background: white; border-radius: 12px; padding: 15px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); text-align: center; }
+    .ribbon { position:absolute; top:10px; left:-5px; background:#e74c3c; color:white; padding:5px 10px; font-size:12px; border-radius:0 6px 6px 0; }
+    .card img { width: 100%; border-radius: 10px; }
+    .price { color: #8e44ad; font-weight: bold; }
+    .old { text-decoration:line-through; color:#999; font-size:14px; }
+    button { margin: 6px; padding: 8px 14px; border: none; border-radius: 6px; cursor: pointer; }
+    .add { background: #8e44ad; color: white; }
+    .buy { background: #27ae60; color: white; }
+    .cart { padding: 20px; background: #fdf2ff; }
+    footer { background: #4a235a; color: white; text-align: center; padding: 15px; }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>Bangles by Nila</h1>
+  <p>Handmade | Elegant | Traditional</p>
+  <nav>
+    <a href="#home">Home</a>
+    <a href="#products">Products</a>
+    <a href="#cart">Cart</a>
+    <a href="#contact">Contact</a>
+  </nav>
+</header>
+
+<section class="hero" id="home">
+  <h2>Beautiful Handmade Thread Bangles</h2>
+  <p>Perfect for weddings, festivals and daily wear</p>
+  <div class="offer-box">
+    <h3>🎉 New Year 2026 Mega Offer 🎉</h3>
+    <p><b>Flat 20% OFF</b> on all products</p>
+    <p>🎁 Buy 2 Get 1 FREE (same price)</p>
+    <div class="countdown" id="countdown"></div>
+  </div>
+</section>
+
+<section class="products" id="products">
+  <div class="card">
+    <div class="ribbon">New Year Offer</div>
+    <img src="images/silk-thread.jpg" alt="Silk Thread Bangles" />
+    <h3>Silk Thread Bangles</h3>
+    <p class="price">₹299 / set</p>
+    <button class="add" onclick="addToCart('Silk Thread Bangles',299)">Add to Cart</button>
+    <button class="buy" onclick="buyNow('Silk Thread Bangles',299)">Buy Now</button>
+  </div>
+
+  <div class="card">
+    <div class="ribbon">New Year Offer</div>
+    <img src="images/bridal.jpg" alt="Bridal Thread Bangles" />
+    <h3>Bridal Thread Bangles</h3>
+    <p class="price">₹499 / set</p>
+    <button class="add" onclick="addToCart('Bridal Thread Bangles',499)">Add to Cart</button>
+    <button class="buy" onclick="buyNow('Bridal Thread Bangles',499)">Buy Now</button>
+  </div>
+
+  <div class="card">
+    <div class="ribbon">New Year Offer</div>
+    <img src="images/daily.jpg" alt="Daily Wear Bangles" />
+    <h3>Daily Wear Bangles</h3>
+    <p class="price">₹199 / set</p>
+    <button class="add" onclick="addToCart('Daily Wear Bangles',199)">Add to Cart</button>
+    <button class="buy" onclick="buyNow('Daily Wear Bangles',199)">Buy Now</button>
+  </div>
+</section>
+
+<section class="cart" id="cart">
+  <h2>Your Cart</h2>
+  <ul id="cartItems"></ul>
+  <p><span class="old">Subtotal: ₹<span id="subtotal">0</span></span></p>
+  <p><b>New Year Discount (20%):</b> -₹<span id="discount">0</span></p>
+  <p><b>Total Payable:</b> ₹<span id="total">0</span></p>
+  <button class="buy" onclick="checkout()">Checkout via WhatsApp</button>
+</section>
+
+<section id="contact" style="padding:20px;text-align:center;">
+  <h2>Contact</h2>
+  <p>WhatsApp: +91 7094954130</p>
+  <p>Instagram: @vennila_bangles</p>
+</section>
+
+<footer>
+  <p>© 2025 Vennila Threaded Bangles</p>
+</footer>
+
+<script>
+  let cart = [];
+  let subtotal = 0;
+
+  function addToCart(name, price) {
+    cart.push({name, price});
+    renderCart();
+  }
+
+  function buyNow(name, price) {
+    const msg = `I want to buy: ${name} - ₹${price} (New Year Offer)`;
+    window.open(`https://wa.me/91XXXXXXXXXX?text=${encodeURIComponent(msg)}`);
+  }
+
+  function renderCart() {
+    const list = document.getElementById('cartItems');
+    list.innerHTML = '';
+    subtotal = 0;
+
+    cart.forEach(item => {
+      subtotal += item.price;
+      const li = document.createElement('li');
+      li.textContent = `${item.name} - ₹${item.price}`;
+      list.appendChild(li);
+    });
+
+    const discount = Math.round(subtotal * 0.20);
+    const total = subtotal - discount;
+
+    document.getElementById('subtotal').textContent = subtotal;
+    document.getElementById('discount').textContent = discount;
+    document.getElementById('total').textContent = total;
+  }
+
+  function checkout() {
+    let message = 'New Year 2026 Order:%0A';
+    cart.forEach(item => {
+      message += `${item.name} - ₹${item.price}%0A`;
+    });
+    message += `Subtotal: ₹${subtotal}%0A20% Discount Applied%0ATotal: ₹${subtotal - Math.round(subtotal*0.20)}`;
+    window.open(`https://wa.me/91XXXXXXXXXX?text=${message}`);
+  }
+
+  // Countdown Timer
+  const endDate = new Date('January 10, 2026 23:59:59').getTime();
+  const timer = setInterval(() => {
+    const now = new Date().getTime();
+    const distance = endDate - now;
+    if (distance < 0) {
+      document.getElementById('countdown').innerHTML = 'Offer Ended';
+      clearInterval(timer);
+      return;
+    }
+    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const mins = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    document.getElementById('countdown').innerHTML = `⏰ Offer ends in ${days}d ${hours}h ${mins}m`;
+  }, 60000);
+</script>
+
+</body>
+</html>
